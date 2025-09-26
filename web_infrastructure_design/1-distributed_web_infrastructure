@@ -1,0 +1,82 @@
+Distributed web infrastructure
+
+Infrastructure Design
+
+    Web Server (Nginx):
+        
+        Serves static content (HTML, CSS, JavaScript).
+        Handles incoming HTTP/HTTPS requests and forwards dynamic requests to the Application Server.
+
+    Application Server:
+        
+        Hosts the application codebase.
+        Processes dynamic requests and interacts with the database for CRUD operations.
+
+    Database Server (MySQL):
+        
+        Stores persistent data used by the application.
+
+    Load Balancer: HAProxy
+        
+        Distributes traffic between the 2 servers.
+
+A user wants to access your website by entering www.foobar.com into their browser. Below is the step-by-step flow of how the web infrastructure processes the request:
+
+Flow of a request:
+
+    Step 1: DNS Lookup
+        
+        The user's browser resolves www.foobar.com to 8.8.8.8.
+
+    Step 2: HAProxy
+        
+        Distributes traffic between the two servers
+
+    Step 3: Server1 or Server2:
+        
+        Distributes traffic to Web server (Nginx 8.8.8.8)
+
+    Step 4: Web server Nginx
+        
+        Handles incoming HTTP/HTTPS requests and forwards dynamic requests to the Application Server.
+
+    Step 5: App server
+        
+        Processes dynamic requests and interacts with the database for CRUD operations.
+
+    Step 6: Database MySql
+        
+        Responds to App server request if necessary.
+
+    Step 7: Response
+        
+        The application server uses the application files (codebase) to generate the appropriate response (HTML, JSON, etc.).
+        The response is sent back to Nginx.
+        Nginx forwards the response to server1 or server2.
+
+    Step 8: Server1 or Server2
+        
+        The server forwards the response to the User's browser.
+
+    Step 9: User's Browser
+        
+        The user's browser renders the response, displaying the website.
+
+
+Issues with This Infrastructure
+
+    Single Points of Failure (SPOF):
+
+        If the load balancer fails, the entire system becomes inaccessible.
+        A failure in the database server will prevent data-dependent requests from being processed.
+
+    Security Issues:
+
+        No Firewall: Exposes servers to unauthorized access.
+        No HTTPS: Communication is not encrypted, leaving data vulnerable to interception.
+
+    No Monitoring:
+
+        Lack of monitoring tools means there's no way to detect server health, traffic spikes, or potential failures in real-time.
+
+Link to JPG: https://imgur.com/a/ZTUQ7ho

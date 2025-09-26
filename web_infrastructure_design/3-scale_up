@@ -1,0 +1,65 @@
+Scale up
+
+Infrastructure Design
+
+    Web Server (Nginx):
+        
+        Serves static content (HTML, CSS, JavaScript).
+        Handles incoming HTTPS requests and forwards dynamic requests to the Application Server.
+
+    Application Server:
+        
+        Hosts the application codebase.
+        Processes dynamic requests and interacts with the database for CRUD operations.
+
+    Database Server (MySQL):
+        
+        Stores persistent data used by the application.
+
+    SSL certificate:
+        
+        serves www.foobar.com over HTTPS
+
+    Load balancer HAProxy:
+
+        Distributed traffic between 3 Web servers
+
+    Firewall:
+
+        Filters requests.
+
+    Monitoring client:
+
+        Gather information such as system metrics, application logs, and traffic patterns.
+
+
+A user wants to access your website by entering www.foobar.com into their browser. Below is the step-by-step flow of how the web infrastructure processes the request:
+
+Flow of Request:
+
+    Step 1: DNS
+        The user's browser resolves www.foobar.com to IP adresss
+
+    Step 2: SSL
+        Generates an SSL certificate for IP adress
+
+    Step 3: HAProxy
+        Distributes traffic to 3 servers
+
+    Step 4: Firewall
+        Checks the Request before sending to servers
+
+    Step 5: Nginx
+        Distributes Request to web server
+
+    Step 6: Monitoring client
+        Gather information such as system metrics, application logs, and traffic patterns.
+
+    Step 7: Application Server 
+        Processes dynamic requests and interacts with the database for CRUD operations.
+
+    Step 8: MySQL
+        Responds to App server request if necessary.
+
+
+Link to JPG: https://imgur.com/a/jMKBRNH
